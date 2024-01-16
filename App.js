@@ -1,20 +1,38 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import HomeScreen from "./src/screens/HomeScreen";
+import MapScreen from "./src/screens/MapScreen";
+import AccountScreen from "./src/screens/AccountScreen";
+import CalendarScreen from "./src/screens/CalendarScreen";
 
-export default function App() {
+const Drawer = createDrawerNavigator();
+const Tab = createBottomTabNavigator();
+
+const HomeTabs = () => {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <Tab.Navigator>
+      <Tab.Screen
+        name="Home"
+        component={HomeScreen}
+        options={{ headerShown: false }}
+      />
+      <Tab.Screen name="Map" component={MapScreen} />
+      <Tab.Screen name="Calendar" component={CalendarScreen} />
+    </Tab.Navigator>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+const App = () => {
+  return (
+    <NavigationContainer>
+      <Drawer.Navigator initialRouteName="Dashboard">
+        <Drawer.Screen name="Dashboard" component={HomeTabs} />
+        <Drawer.Screen name="Account" component={AccountScreen} />
+      </Drawer.Navigator>
+    </NavigationContainer>
+  );
+};
+
+export default App;
